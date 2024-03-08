@@ -3,9 +3,11 @@ import axios from "axios";
 import Title from "./components/Title";
 import Form from "./components/Form";
 import Results from "./components/Results";
+import Loading from "./components/Loading";
 import './App.css';
 
 function App() {
+  const[loading,setLoading] = useState(false);
   const[city,setCity] = useState("");
   const[results,setResults] = useState({
   country:"",
@@ -16,6 +18,7 @@ function App() {
 });
   const getWeather = (e) =>{
     e.preventDefault();
+    setLoading(true);
     axios.get(`https://api.weatherapi.com/v1/current.json?key=cd91168aedce471fa0f71204240503&q=${city}&aqi=no`)
     .then(res =>{
       setResults({
@@ -25,16 +28,19 @@ function App() {
         conditionText:res.data.current.condition.text,
         icon:res.data.current.condition.icon
       })
+      setCity("");
+      setLoading(false);
     })
+    .catch(err => alert("ごめん。その場所の天気は分からんわ。ページ再読み込みして、別の都市名入れてみて。"))
 }
   return (
     <div className="wrapper">
       <div className="container">
-     <h1>天気を知りたいときにとても便利</h1>
+     <h1>天気調べとく？</h1>
      <img src="./images/icon_chop.png" alt="チョップ"/>
      <Title />
-     <Form setCity={setCity} getWeather={getWeather} />
-     <Results results={results}/>
+     <Form setCity={setCity} getWeather={getWeather} city={city} />
+     {loading ? <Loading />:<Results results={results} />}
     </div>
     </div>
   );

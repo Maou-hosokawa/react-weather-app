@@ -1,12 +1,17 @@
 //Form.js
 
-const Form = (props) =>{
+const Form = ({city,setCity,getWeather}) =>{
 
     return(
-        <form>
-            <input type="text" name="city" placeholder="どこの天気知りたい？" onChange={e => props.setCity(e.target.value)}/>
-            <button type="submit" onClick={props.getWeather}>お天気チェック</button>
+        <>
+        <form onSubmit={getWeather}>
+            <input type="text" name="city" placeholder="どこ？" onChange={e => setCity(e.target.value)} value={city}/>
+            <button type="submit">チェック!</button>
         </form>
+        <div>
+        <p>海外も大丈夫やで</p>
+        </div>
+        </>
     );
 };
 
