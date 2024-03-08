@@ -30,7 +30,8 @@ function App() {
   return (
     <div className="wrapper">
       <div className="container">
-     <h1>こんにちは</h1>
+     <h1>天気を知りたいときにとても便利</h1>
+     <img src="./images/icon_chop.png" alt="チョップ"/>
      <Title />
      <Form setCity={setCity} getWeather={getWeather} />
      <Results results={results}/>
